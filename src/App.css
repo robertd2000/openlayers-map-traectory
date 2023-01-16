@@ -25,16 +25,3 @@
 .ol-attribution {
   display: none;
 }
-
-.routes {
-  position: absolute;
-  top: 20%;
-  width: 40%;
-  padding: 20px;
-  margin-left: 20px;
-  background-color: white;
-  max-width: 350px;
-  min-width: 250px;
-  border-radius: 10px;
-  z-index: 999;
-}

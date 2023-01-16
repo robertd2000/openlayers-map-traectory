@@ -1,51 +1,52 @@
 import { Overlay } from 'ol'
-import React, { useContext, useEffect } from 'react'
+import { fromLonLat, toLonLat } from 'ol/proj'
+import React, { useContext, useEffect, useRef } from 'react'
 import MapContext from '../context/mapContext'
-import { formatCoordinate } from '../utils/format'
+import { formatdate } from '../utils/date'
 
 export const useOverlay = () => {
+  const element = useRef<HTMLElement | null>(null)
   const { map } = useContext(MapContext)
+
   useEffect(() => {
-    const element = document.getElementById('popup')
+    if (!map) return
 
     const popup = new Overlay({
-      element: element!,
+      position: fromLonLat([-43.3307, -22.9201]),
+      positioning: 'center-center',
+      element: element.current!,
       stopEvent: false,
     })
     map.addOverlay(popup)
 
-    let popover
-    map.on('click', function (event) {
-      if (popover) {
-        popover.dispose()
-        popover = undefined
+    map.on('click', function (evt: any) {
+      const feature = map.forEachFeatureAtPixel(
+        evt.pixel,
+        function (feature: any) {
+          return feature
+        }
+      )
+      if (feature) {
+        const coordinates = feature.getGeometry().getCoordinates()
+        if (element?.current) {
+          element.current.innerHTML =
+            '<span> Скорость:</span>' +
+            feature.get('speed') +
+            '<hr>' +
+            '<span>Дата:</span>' +
+            formatdate(feature.get('time')) +
+            '<hr>' +
+            '<span> Направление:</span>' +
+            feature.get('course') +
+            '<span> Координаты:</span>' +
+            coordinates
+          popup.setPosition(coordinates)
+        }
+      } else {
+        popup.setPosition(undefined)
       }
-      const feature = map.getFeaturesAtPixel(event.pixel)[0]
-      if (!feature) {
-        return
-      }
-      const coordinate = feature.getGeometry().getCoordinates()
-      popup.setPosition([
-        coordinate[0] + Math.round(event.coordinate[0] / 360) * 360,
-        coordinate[1],
-      ])
-    })
-
-    popover = new bootstrap.Popover(element, {
-      container: element.parentElement,
-      content: formatCoordinate(coordinate),
-      html: true,
-      offset: [0, 20],
-      placement: 'top',
-      sanitize: false,
-    })
-    popover.show()
-
-    map.on('pointermove', function (event) {
-      const type = map.hasFeatureAtPixel(event.pixel) ? 'pointer' : 'inherit'
-      map.getViewport().style.cursor = type
     })
   })
 
-  return {}
+  return { element }
 }

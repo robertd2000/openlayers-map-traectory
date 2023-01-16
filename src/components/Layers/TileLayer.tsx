@@ -14,8 +14,6 @@ const TileLayer: FC<IProps> = ({ source, zIndex = 0 }) => {
   useEffect(() => {
     if (!map) return
 
-    console.log(map)
-
     let tileLayer = new OLTileLayer({
       source,
       zIndex,

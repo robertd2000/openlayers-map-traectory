@@ -2,20 +2,23 @@ import lineString from 'turf-linestring'
 import Vector from 'ol/layer/Vector'
 import { Vector as VectorSource } from 'ol/source'
 import { GeoJSON } from 'ol/format'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import MapContext from '../context/mapContext'
 import Style from 'ol/style/Style'
 import Stroke from 'ol/style/Stroke'
 import { Geometry } from 'ol/geom'
 
 export const useTraectoryLine = () => {
-  const [currentLayer, setCurrentLayer] = useState<Vector<
-    VectorSource<Geometry>
-  > | null>(null)
-
   const { map } = useContext(MapContext)
 
-  const setRouteLine = (coords: number[][], color: string) => {
+  const setRouteLine = (
+    coords: number[][],
+    color: string,
+    currentLayer: Vector<VectorSource<Geometry>> | null,
+    setCurrentLayer: React.Dispatch<
+      React.SetStateAction<Vector<VectorSource<Geometry>> | null>
+    >
+  ) => {
     map.removeLayer(currentLayer)
 
     let line = new lineString(coords)

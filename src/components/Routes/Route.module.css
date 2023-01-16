@@ -1,0 +1,32 @@
+.route {
+  width: 100%;
+}
+
+.route-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  flex-direction: row;
+}
+
+.route-info span {
+  margin: 10px auto;
+  vertical-align: middle;
+}
+
+.arrow-right {
+  display: block;
+  margin: 30px auto;
+  width: 25px;
+  height: 25px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+}
+.arrow-right {
+  transform: rotate(135deg);
+}
+
+hr {
+  border: 1px solid;
+}
