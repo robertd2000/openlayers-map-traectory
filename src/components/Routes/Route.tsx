@@ -15,10 +15,11 @@ export const Route: FC<IProps> = ({ route, currentRouteId, chooseRoute }) => {
         className={styles['route-info']}
         style={{
           color: currentRouteId === route.id ? route.color : 'black',
-          fontSize: currentRouteId === route.id ? '22px' : '18px',
         }}
       >
-        <div>{route.name}</div>
+        <div className={currentRouteId === route.id ? styles.active : ''}>
+          {route.name}
+        </div>
         <div>
           <span
             style={{ borderColor: route.color }}

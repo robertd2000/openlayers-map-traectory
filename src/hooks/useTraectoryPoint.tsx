@@ -7,16 +7,13 @@ import MapContext from '../context/mapContext'
 import { fromLonLat } from 'ol/proj'
 import { ITraectory } from '../types'
 
-export const useTraectory = () => {
+export const useTraectoryPoint = () => {
   const { map } = useContext(MapContext)
 
   const setRoute = (
     coords: ITraectory[],
     color: string,
-    currentLayer: Vector<VectorSource<Geometry>> | null,
-    setCurrentLayer: React.Dispatch<
-      React.SetStateAction<Vector<VectorSource<Geometry>> | null>
-    >
+    currentLayer: Vector<VectorSource<Geometry>> | null
   ) => {
     map.removeLayer(currentLayer)
     let features: Feature<Point>[] = []
@@ -45,9 +42,9 @@ export const useTraectory = () => {
       },
     })
 
-    setCurrentLayer(vectorLayer)
     map.addLayer(vectorLayer)
     map.getView().fit(vectorSource.getExtent())
+    return vectorLayer
   }
 
   return { setRoute }

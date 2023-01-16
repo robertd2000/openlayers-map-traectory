@@ -11,8 +11,9 @@ const Routes = () => {
 
   return (
     <div className={styles.routes}>
-      <span className={styles.close} onClick={resetRoute} />
       <Search />
+      <span className={styles.close} onClick={resetRoute} />
+
       {routes &&
         Array.isArray(routes) &&
         routes?.map((route) => (

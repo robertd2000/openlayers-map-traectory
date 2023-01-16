@@ -14,7 +14,7 @@ const headers = {
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
 }
 
-export const getRotes = async (): Promise<IRoute[]> => {
+export const getRoutes = async (): Promise<IRoute[]> => {
   // const reponse = await axios.get('https://janti.ru:5381/Main/GetRoutes', {
   //   headers,
   //   method: 'GET',

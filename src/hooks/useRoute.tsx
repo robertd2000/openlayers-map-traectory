@@ -2,15 +2,18 @@ import { Geometry } from 'ol/geom'
 import { Vector } from 'ol/layer'
 import VectorSource from 'ol/source/Vector'
 import { useContext, useEffect, useState } from 'react'
-import { getRotes, getRouteTraectory } from '../api'
+import { getRoutes, getRouteTraectory } from '../api'
 import MapContext from '../context/mapContext'
 import { IRoute, ITraectory } from '../types'
-import { useTraectory } from './useTraectory'
+import { getColor, getCoordinates } from '../utils/format'
+import { useTraectoryPoint } from './useTraectoryPoint'
 import { useTraectoryLine } from './useTraectoryLine'
+import { useFlags } from './useFlags'
 
 export const useRoute = () => {
-  const { setRoute } = useTraectory()
+  const { setRoute } = useTraectoryPoint()
   const { setRouteLine } = useTraectoryLine()
+  const { setFlags } = useFlags()
   const { map } = useContext(MapContext)
 
   const [routes, setRoutes] = useState<IRoute[] | string>([])
@@ -23,22 +26,28 @@ export const useRoute = () => {
   > | null>(null)
   const [currentTraectoryLineLayer, setCurrentTraectoryLineLayer] =
     useState<Vector<VectorSource<Geometry>> | null>(null)
+  const [currentFlagLayer, setCurrentFlagLayer] = useState<Vector<
+    VectorSource<Geometry>
+  > | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getRotes()
+      const data = await getRoutes()
       setRoutes(data)
     }
 
     fetchData()
 
-    return () => setCurrentRoute([])
-  }, [])
+    return () => {
+      setCurrentRoute([])
+    }
+  }, [currentRouteId])
 
   const resetRoute = () => {
     setCurrentRouteId(null)
     map.removeLayer(currentTraectoryLayer)
     map.removeLayer(currentTraectoryLineLayer)
+    map.removeLayer(currentFlagLayer)
   }
 
   const chooseRoute = async (routeId: number) => {
@@ -46,17 +55,26 @@ export const useRoute = () => {
     setCurrentRouteId(routeId)
     let color, coords
     if (Array.isArray(res)) {
-      color = Array.isArray(routes) ? routes?.[routeId - 1]?.color : 'red'
-      coords = res.map((r) => {
-        return [r.lon, r.lat]
-      })
-      setRoute(res, color, currentTraectoryLayer, setCurrentTraectoryLayer)
-      setRouteLine(
+      color = getColor(routes, routeId)
+      coords = getCoordinates(res)
+      let currentTraectoryVectorLayer = setRoute(
+        res,
+        color,
+        currentTraectoryLayer
+      )
+      let currentTraectoryLineVectorLayer = setRouteLine(
         coords,
         color,
-        currentTraectoryLineLayer,
-        setCurrentTraectoryLineLayer
+        currentTraectoryLineLayer
       )
+      let flagLayer = setFlags(
+        coords[0],
+        coords[coords.length - 1],
+        currentFlagLayer
+      )
+      setCurrentTraectoryLayer(currentTraectoryVectorLayer)
+      setCurrentTraectoryLineLayer(currentTraectoryLineVectorLayer)
+      setCurrentFlagLayer(flagLayer)
     } else {
       resetRoute()
     }

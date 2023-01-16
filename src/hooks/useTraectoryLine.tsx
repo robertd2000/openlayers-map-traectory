@@ -14,10 +14,7 @@ export const useTraectoryLine = () => {
   const setRouteLine = (
     coords: number[][],
     color: string,
-    currentLayer: Vector<VectorSource<Geometry>> | null,
-    setCurrentLayer: React.Dispatch<
-      React.SetStateAction<Vector<VectorSource<Geometry>> | null>
-    >
+    currentLayer: Vector<VectorSource<Geometry>> | null
   ) => {
     map.removeLayer(currentLayer)
 
@@ -41,9 +38,9 @@ export const useTraectoryLine = () => {
         }),
       ],
     })
-    setCurrentLayer(vectorLayer)
 
     map.addLayer(vectorLayer)
+    return vectorLayer
   }
 
   return {

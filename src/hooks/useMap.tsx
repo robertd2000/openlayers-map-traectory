@@ -5,6 +5,7 @@ import View from 'ol/View'
 export const useMap = (center: number[], zoom: number) => {
   const mapRef = useRef<HTMLElement | undefined>()
   const [map, setMap] = useState<Map | null>(null)
+
   const view = new View({
     center,
     zoom,

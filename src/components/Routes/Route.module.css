@@ -8,6 +8,7 @@
   justify-content: space-between;
   vertical-align: middle;
   flex-direction: row;
+  font-size: 18px;
 }
 
 .route-info span {
@@ -27,6 +28,25 @@
   transform: rotate(135deg);
 }
 
+.active {
+  font-size: 22px;
+}
+
 hr {
   border: 1px solid;
+}
+
+@media (max-width: 768px) {
+  .route-info {
+    font-size: 12px;
+  }
+
+  .active {
+    font-size: 16px;
+  }
+
+  .arrow-right {
+    width: 15px;
+    height: 15px;
+  }
 }
