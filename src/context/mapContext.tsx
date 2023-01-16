@@ -8,8 +8,8 @@ interface IProps {
   center: number[]
   children: React.ReactNode
 }
-
 const MapContext = createContext<
+  // @ts-ignore
   IntrinsicAttributes & ProviderProps<Map | null>
 >(null)
 

@@ -3,7 +3,7 @@ import Map from 'ol/Map.js'
 import View from 'ol/View'
 
 export const useMap = (center: number[], zoom: number) => {
-  const mapRef = useRef<HTMLElement | undefined>()
+  const mapRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<Map | null>(null)
 
   const view = new View({
@@ -17,7 +17,7 @@ export const useMap = (center: number[], zoom: number) => {
       view,
     }
     let map = new Map(mapConfig)
-    map.setTarget(mapRef.current)
+    map.setTarget(mapRef.current || '')
     setMap(map)
 
     return () => map.setTarget(undefined)

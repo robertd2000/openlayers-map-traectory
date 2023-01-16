@@ -1,11 +1,10 @@
 import { Overlay } from 'ol'
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import MapContext from '../context/mapContext'
-import { formatdate } from '../utils/date'
 import { getMessage } from '../utils/format'
 
 export const useOverlay = () => {
-  const element = useRef<HTMLElement | null>(null)
+  const element = useRef<HTMLDivElement>(null)
   const { map } = useContext(MapContext)
 
   const mapClickHandler = (evt: any, popup: Overlay) => {
