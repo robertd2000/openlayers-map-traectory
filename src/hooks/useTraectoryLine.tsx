@@ -1,12 +1,13 @@
+import { useContext } from 'react'
 import lineString from 'turf-linestring'
 import Vector from 'ol/layer/Vector'
 import { Vector as VectorSource } from 'ol/source'
-import { GeoJSON } from 'ol/format'
-import { useContext } from 'react'
-import MapContext from '../context/mapContext'
+import { GeoJSON, Polyline } from 'ol/format'
 import Style from 'ol/style/Style'
 import Stroke from 'ol/style/Stroke'
 import { Geometry } from 'ol/geom'
+import MapContext from '../context/mapContext'
+import { Feature } from 'ol'
 
 export const useTraectoryLine = () => {
   const { map } = useContext(MapContext)
@@ -18,14 +19,26 @@ export const useTraectoryLine = () => {
   ) => {
     map.removeLayer(currentLayer)
 
+    const route = new Polyline({
+      factor: 1e6,
+    }).readGeometry(coords, {
+      dataProjection: 'EPSG:4326',
+      featureProjection: 'EPSG:3857',
+    })
+
+    const routeFeature = new Feature({
+      type: 'line',
+      geometry: route,
+    })
+
     let line = new lineString(coords)
     let format = new GeoJSON()
 
-    let vectorSource = new VectorSource()
     let feature = format.readFeature(line, {
       featureProjection: 'EPSG:3857',
     })
 
+    let vectorSource = new VectorSource()
     vectorSource.addFeature(feature)
     let vectorLayer = new Vector({
       source: vectorSource,

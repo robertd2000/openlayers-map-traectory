@@ -1,7 +1,7 @@
 .map {
   margin: 0 !important;
-  min-width: 600px;
-  min-height: 500px;
+  /* min-width: 600px;
+  min-height: 500px; */
   margin: 50px;
   height: 100vh;
   width: 100vw;
@@ -9,9 +9,7 @@
 
 .ol-control {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
-  padding: 20px;
+  margin: 20px;
 }
 
 .ol-zoom-out {
@@ -24,4 +22,10 @@
 
 .ol-attribution {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .ol-control {
+    margin: 5px;
+  }
 }

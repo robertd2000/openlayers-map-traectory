@@ -1,14 +1,17 @@
+import { useContext, useEffect, useState } from 'react'
 import { Geometry } from 'ol/geom'
 import { Vector } from 'ol/layer'
 import VectorSource from 'ol/source/Vector'
-import { useContext, useEffect, useState } from 'react'
 import { getRoutes, getRouteTraectory } from '../api'
 import MapContext from '../context/mapContext'
-import { IRoute, ITraectory } from '../types'
 import { getColor, getCoordinates } from '../utils/format'
 import { useTraectoryPoint } from './useTraectoryPoint'
 import { useTraectoryLine } from './useTraectoryLine'
 import { useFlags } from './useFlags'
+import { IRoute, ITraectory } from '../types'
+import VectorLayer from 'ol/layer/Vector'
+import Style from 'ol/style/Style'
+import Stroke from 'ol/style/Stroke'
 
 export const useRoute = () => {
   const { setRoute } = useTraectoryPoint()
@@ -16,7 +19,7 @@ export const useRoute = () => {
   const { setFlags } = useFlags()
   const { map } = useContext(MapContext)
 
-  const [routes, setRoutes] = useState<IRoute[] | string>([])
+  const [routes, setRoutes] = useState<IRoute[]>([])
   const [currentRoute, setCurrentRoute] = useState<
     ITraectory[] | string | null
   >(null)
@@ -67,11 +70,13 @@ export const useRoute = () => {
         color,
         currentTraectoryLineLayer
       )
+
       let flagLayer = setFlags(
         coords[0],
         coords[coords.length - 1],
         currentFlagLayer
       )
+
       setCurrentTraectoryLayer(currentTraectoryVectorLayer)
       setCurrentTraectoryLineLayer(currentTraectoryLineVectorLayer)
       setCurrentFlagLayer(flagLayer)
@@ -82,5 +87,11 @@ export const useRoute = () => {
     setCurrentRoute(res)
   }
 
-  return { routes, currentRoute, currentRouteId, chooseRoute, resetRoute }
+  return {
+    routes,
+    currentRoute,
+    currentRouteId,
+    chooseRoute,
+    resetRoute,
+  }
 }

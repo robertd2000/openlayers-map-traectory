@@ -22,3 +22,12 @@
   background-color: #fff;
   border: 1px solid #84a2fa;
 }
+
+@media (max-width: 768px) {
+  .input {
+    width: 40%;
+    line-height: 1;
+    font-size: 14px;
+    background-position: 10px 5px;
+  }
+}

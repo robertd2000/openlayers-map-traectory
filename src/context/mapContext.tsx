@@ -1,5 +1,4 @@
-import { createContext, FC, ProviderProps } from 'react'
-import React from 'react'
+import React, { createContext, FC, ProviderProps } from 'react'
 import Map from 'ol/Map.js'
 import { useMap } from '../hooks/useMap'
 

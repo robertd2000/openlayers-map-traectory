@@ -14,20 +14,20 @@ export const formatCoordinate = (coordinate: number[]) => {
 export const getMessage = (feature: any, coordinates: number[]) => {
   return (
     '<span> Скорость: </span>' +
-    feature.get('speed') +
+    (feature.get('speed') || 'Нет данных') +
     '<hr>' +
     '<span>Дата: </span>' +
     formatdate(feature.get('time')) +
     '<hr>' +
     '<span> Направление: </span>' +
-    feature.get('course') +
+    (feature.get('course') || 'Нет данных') +
     '<hr>' +
     '<span> Координаты: </span>' +
-    coordinates
+    (coordinates || 'Нет данных')
   )
 }
 
-export const getColor = (routes: IRoute[] | string, routeId: number) => {
+export const getColor = (routes: IRoute[], routeId: number) => {
   return Array.isArray(routes) ? routes?.[routeId - 1]?.color : 'red'
 }
 

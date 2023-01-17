@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { useSearch } from '../../hooks/useSearch'
 import styles from './Search.module.css'
 
-export const Search = () => {
-  return <input className={styles.input} type="text" placeholder="Search" />
+interface IProps {
+  searchTerm: string
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+export const Search: FC<IProps> = ({ searchTerm, onSearch }) => {
+  return (
+    <input
+      value={searchTerm}
+      onChange={onSearch}
+      className={styles.input}
+      type="text"
+      placeholder="Search"
+    />
+  )
 }

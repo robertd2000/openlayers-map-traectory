@@ -1,8 +1,14 @@
 export const formatdate = (timestamp: number) => {
-  const d = new Date()
+  const d = new Date(timestamp * 1000)
+  const timeFormat = [d.getUTCHours(), d.getMinutes(), d.getSeconds()]
+  const dateFormat = [d.getDate(), d.getMonth() + 1, d.getFullYear()]
   const dformat =
-    [d.getHours(), d.getMinutes(), d.getSeconds()].join(':') +
+    (timeFormat.every((date) => !isNaN(date))
+      ? timeFormat.join(':')
+      : 'Нет данных') +
     ' ' +
-    [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('/')
+    (dateFormat.every((date) => !isNaN(date))
+      ? dateFormat.join('/')
+      : '/Нет данных')
   return dformat
 }

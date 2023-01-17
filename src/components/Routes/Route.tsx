@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export const Route: FC<IProps> = ({ route, currentRouteId, chooseRoute }) => {
-  return (
+  return route ? (
     <div className={styles.route} onClick={() => chooseRoute(route.id)}>
       <div
         className={styles['route-info']}
@@ -34,5 +34,5 @@ export const Route: FC<IProps> = ({ route, currentRouteId, chooseRoute }) => {
         }}
       />
     </div>
-  )
+  ) : null
 }

@@ -1,10 +1,10 @@
+import React, { useContext } from 'react'
 import { Feature } from 'ol'
 import { Geometry, Point } from 'ol/geom'
-import React, { useContext } from 'react'
 import { Vector, Vector as VectorLayer } from 'ol/layer.js'
 import { Vector as VectorSource } from 'ol/source.js'
-import MapContext from '../context/mapContext'
 import { fromLonLat } from 'ol/proj'
+import MapContext from '../context/mapContext'
 import { ITraectory } from '../types'
 
 export const useTraectoryPoint = () => {
@@ -16,11 +16,12 @@ export const useTraectoryPoint = () => {
     currentLayer: Vector<VectorSource<Geometry>> | null
   ) => {
     map.removeLayer(currentLayer)
-    let features: Feature<Point>[] = []
+    let features: Feature<Geometry>[] = []
 
     coords.forEach((place) => {
       const point = new Point(fromLonLat([place.lon, place.lat]))
       let feature = new Feature({
+        type: 'point',
         geometry: point,
         speed: place.speed,
         time: place.time,

@@ -4,20 +4,17 @@ import MapContext from '../context/mapContext'
 import { getMessage } from '../utils/format'
 
 export const useOverlay = () => {
-  const element = useRef<HTMLDivElement>(null)
+  const overlayElement = useRef<HTMLDivElement>(null)
   const { map } = useContext(MapContext)
 
-  const mapClickHandler = (evt: any, popup: Overlay) => {
-    const feature = map.forEachFeatureAtPixel(
-      evt.pixel,
-      function (feature: any) {
-        return feature
-      }
-    )
+  const mapClickHandler = (e: any, popup: Overlay) => {
+    const feature = map.forEachFeatureAtPixel(e.pixel, function (feature: any) {
+      return feature
+    })
     if (feature) {
       const coordinates = feature.getGeometry().getCoordinates()
-      if (element?.current) {
-        element.current.innerHTML = getMessage(feature, coordinates)
+      if (overlayElement?.current) {
+        overlayElement.current.innerHTML = getMessage(feature, coordinates)
         popup.setPosition(coordinates)
       }
     } else {
@@ -30,7 +27,7 @@ export const useOverlay = () => {
 
     const popup = new Overlay({
       positioning: 'center-center',
-      element: element.current!,
+      element: overlayElement.current!,
       stopEvent: false,
     })
 
@@ -38,5 +35,5 @@ export const useOverlay = () => {
     map.on('click', (e: any) => mapClickHandler(e, popup))
   })
 
-  return { element }
+  return { overlayElement }
 }

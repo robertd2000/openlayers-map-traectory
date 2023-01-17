@@ -1,13 +1,13 @@
+import { useContext } from 'react'
 import { Feature } from 'ol'
 import { Geometry, Point } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
+import Vector from 'ol/layer/Vector'
 import { fromLonLat } from 'ol/proj'
 import VectorSource from 'ol/source/Vector'
 import Icon from 'ol/style/Icon'
 import Style from 'ol/style/Style'
-import { useContext } from 'react'
 import MapContext from '../context/mapContext'
-import Vector from 'ol/layer/Vector'
 import { END_FLAG_ICON, START_FLAG_ICON } from '../utils/constants'
 
 export const useFlags = () => {
@@ -48,7 +48,7 @@ export const useFlags = () => {
     const vectorLayer = new VectorLayer({
       source: vectorSource,
       style: {
-        'circle-radius': 3,
+        'circle-radius': 5,
         'circle-fill-color': 'red',
       },
     })

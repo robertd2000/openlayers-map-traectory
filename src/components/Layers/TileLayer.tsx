@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect } from 'react'
 import OLTileLayer from 'ol/layer/Tile'
-import MapContext from '../../context/mapContext'
 import * as olSource from 'ol/source'
+import MapContext from '../../context/mapContext'
 
 interface IProps {
   source: olSource.OSM
