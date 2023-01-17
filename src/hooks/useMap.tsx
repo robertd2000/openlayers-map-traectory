@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Map from 'ol/Map.js'
 import View from 'ol/View'
 import { ZoomSlider } from 'ol/control.js'
+
 export const useMap = (center: number[], zoom: number) => {
   const mapRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<Map | null>(null)

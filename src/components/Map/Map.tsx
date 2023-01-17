@@ -7,6 +7,7 @@ interface IProps {
   center: number[]
   children: React.ReactNode
 }
+
 const MapComponent: FC<IProps> = ({ children, zoom, center }) => {
   return (
     <MapContextProvider center={center} zoom={zoom}>

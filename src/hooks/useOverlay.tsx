@@ -1,5 +1,5 @@
+import React, { useContext, useEffect, useRef } from 'react'
 import { Overlay } from 'ol'
-import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import MapContext from '../context/mapContext'
 import { getMessage } from '../utils/format'
 

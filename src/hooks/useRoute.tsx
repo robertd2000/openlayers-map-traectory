@@ -9,9 +9,6 @@ import { useTraectoryPoint } from './useTraectoryPoint'
 import { useTraectoryLine } from './useTraectoryLine'
 import { useFlags } from './useFlags'
 import { IRoute, ITraectory } from '../types'
-import VectorLayer from 'ol/layer/Vector'
-import Style from 'ol/style/Style'
-import Stroke from 'ol/style/Stroke'
 
 export const useRoute = () => {
   const { setRoute } = useTraectoryPoint()

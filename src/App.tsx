@@ -1,9 +1,9 @@
-import './App.css'
+import { fromLonLat } from 'ol/proj'
 import MapComponent from './components/Map/Map'
 import TileLayer from './components/Layers/TileLayer'
-import osm from './utils/osm'
-import { fromLonLat } from 'ol/proj'
 import Routes from './components/Routes/Routes'
+import osm from './utils/osm'
+import './App.css'
 
 function App() {
   return (
